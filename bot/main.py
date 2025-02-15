@@ -10,6 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 from crontab import CronTab
 from typing import Optional
+import tempfile
 from bs4 import BeautifulSoup
 import random
 import smtplib
@@ -31,6 +32,11 @@ def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
     options.add_argument('-window-size=1920,1080')
     # options.add_argument("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
 
+
+    # Create a unique temporary directory for Chrome's user data
+    temp_dir = tempfile.mkdtemp()
+    options.add_argument(f"--user-data-dir={temp_dir}")
+    
     driver = webdriver.Chrome(options=options)
 
 
