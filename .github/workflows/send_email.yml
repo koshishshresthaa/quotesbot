@@ -1,0 +1,29 @@
+name: Send Daily Quote Email
+
+on:
+  schedule:
+    - cron: "0 2 * * *"  # Runs at 8 AM Nepal Time (Nepal is UTC+5:45, so 2 AM UTC)
+
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run script to send email
+        env:
+          GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+          GMAIL_PASSWORD_BASE64: ${{ secrets.GMAIL_PASSWORD_BASE64 }}
+        run: python main.py

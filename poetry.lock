@@ -155,6 +155,17 @@ requests = ">=2.9.2"
 requests-toolbelt = ">=0.9.1"
 
 [[package]]
+name = "crontab"
+version = "1.0.1"
+description = "Parse and use crontab schedules in Python"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "crontab-1.0.1.tar.gz", hash = "sha256:89477e3f93c81365e738d5ee2659509e6373bb2846de13922663e79aa74c6b91"},
+]
+
+[[package]]
 name = "idna"
 version = "3.10"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -281,4 +292,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "b41748a0885d05be27c1674b74263826c4bd43b343976a7419413b8dcab8ad63"
+content-hash = "d21ad43fc32cc3ff2f15eb61fbabbe75a297e56a566cdb773fac5f45a62adee3"

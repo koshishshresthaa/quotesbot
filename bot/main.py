@@ -1,6 +1,8 @@
 import re
 from dotenv import load_dotenv
 import os
+import base64
+from crontab import CronTab
 from typing import Optional
 import cloudscraper
 from bs4 import BeautifulSoup
@@ -11,8 +13,8 @@ from email.mime.text import MIMEText
 load_dotenv()
 
 GMAIL_USER=os.getenv("GMAIL_USERNAME")
-GMAIL_PASSWORD=os.getenv("GMAIL_PASSWORD")
-RECIPENT_USER = 'koshish62@gmail.com'
+GMAIL_PASSWORD=base64.b64decode(os.getenv("GMAIL_PASSWORD")).decode("utf-8")
+RECIPIENT_USER = 'koshish62@gmail.com'
 
 def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
 
@@ -53,13 +55,13 @@ def send_mail():
 
     msg['Subject'] = 'Quote of the DAY'
     msg['From'] = GMAIL_USER
-    msg ['To'] = RECIPENT_USER
+    msg ['To'] = RECIPIENT_USER
 
     try:
         s = smtplib.SMTP('smtp.gmail.com',587)
         s.starttls()
         s.login(GMAIL_USER,GMAIL_PASSWORD)
-        s.sendmail(GMAIL_USER, RECIPENT_USER, msg.as_string())
+        s.sendmail(GMAIL_USER, RECIPIENT_USER, msg.as_string())
         s.quit()
         print("Email sent successfully")
     except Exception as e:

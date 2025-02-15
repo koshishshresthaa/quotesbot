@@ -10,7 +10,8 @@ requires-python = ">=3.12"
 dependencies = [
     "beautifulsoup4 (>=4.13.3,<5.0.0)",
     "cloudscraper (>=1.2.71,<2.0.0)",
-    "python-dotenv (>=1.0.1,<2.0.0)"
+    "python-dotenv (>=1.0.1,<2.0.0)",
+    "crontab (>=1.0.1,<2.0.0)"
 ]
 
 
