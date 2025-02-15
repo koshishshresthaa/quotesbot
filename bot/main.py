@@ -23,20 +23,20 @@ def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
     if author:
         author_name=re.sub(r"\s+", "-", author.strip())
         url=f"https://www.brainyquote.com/authors/{author_name}-quotes"
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
-        }
+        # headers = {
+        #     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+        # }
 
     if topics:
         author_name=re.sub(r"\s+", "-", author.strip())
         url=f"https://www.brainyquote.com/topics/{topics}-quotes"
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
-        }
+        # headers = {
+        #     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+        # }
 
 
     print(url)
-    response=scraper.get(url, headers=headers)
+    response=scraper.get(url)
 
     print(response.text)
 
