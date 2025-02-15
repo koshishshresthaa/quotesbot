@@ -2,6 +2,10 @@ import re
 from dotenv import load_dotenv
 import os
 import base64
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
 from crontab import CronTab
 from typing import Optional
 import cloudscraper
@@ -16,9 +20,16 @@ GMAIL_USER=os.getenv("GMAIL_USERNAME")
 GMAIL_PASSWORD=os.getenv("GMAIL_PASSWORD")
 RECIPIENT_USER = 'koshish62@gmail.com'
 
+
 def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
 
-    scraper=cloudscraper.create_scraper()
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")  # Runs without opening a browser
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
 
     if author:
         author_name=re.sub(r"\s+", "-", author.strip())
@@ -27,26 +38,18 @@ def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
         #     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
         # }
 
-    if topics:
-        author_name=re.sub(r"\s+", "-", author.strip())
+    elif topics:
+        topic_name=re.sub(r"\s+", "-", topics.strip())
         url=f"https://www.brainyquote.com/topics/{topics}-quotes"
         # headers = {
         #     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
         # }
 
+    driver.get(url)
 
-    print(url)
-    response=scraper.get(url)
+    quotes = [elem.text for elem in driver.find_elements(By.CLASS_NAME, "b-qt")]
 
-    print(response.text)
-
-
-    soup=BeautifulSoup(response.text,"html.parser")
-
-    quotes=[q.text.strip() for q in soup.find_all("a", class_="b-qt")]
-
-    print(quotes)
-
+    driver.quit() 
     return random.choice(quotes) if quotes else "STAY HARD !!"
 
 
