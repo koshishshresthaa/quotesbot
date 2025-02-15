@@ -20,14 +20,14 @@ def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
 
     scraper=cloudscraper.create_scraper()
 
-    if author is not None:
+    if author:
         author_name=re.sub(r"\s+", "-", author.strip())
         url=f"https://www.brainyquote.com/authors/{author_name}-quotes"
         headers = {
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
         }
 
-    if topics is not None:
+    if topics:
         author_name=re.sub(r"\s+", "-", author.strip())
         url=f"https://www.brainyquote.com/topics/{topics}-quotes"
         headers = {
@@ -40,16 +40,15 @@ def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
 
     quotes=[q.text.strip() for q in soup.find_all("a", class_="b-qt")]
 
-    print(quotes)
-
     return random.choice(quotes) if quotes else "STAY HARD !!"
 
 
 
 def send_mail():
 
-    quote=get_random_quote(author='david goggins')
-    body = f"Good Morning!! \n\n Here's your quote of the day: \n\n '{quote}' \n\n Have a great day !"
+    author='david goggins'
+    quote=get_random_quote(author=author)
+    body = f"Good Morning!! \n\n Here's your quote of the day: \n\n '{quote}' - {author} \n\n Have a great day !"
 
     msg=MIMEText(body)
 
