@@ -37,7 +37,10 @@ def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
 
     print(url)
     response=scraper.get(url, headers=headers)
-    
+
+    print(response.text)
+
+
     soup=BeautifulSoup(response.text,"html.parser")
 
     quotes=[q.text.strip() for q in soup.find_all("a", class_="b-qt")]
