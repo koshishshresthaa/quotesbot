@@ -57,11 +57,13 @@ def send_mail():
     msg ['To'] = RECIPIENT_USER
 
     try:
-        print(GMAIL_USER , RECIPIENT_USER , GMAIL_PASSWORD)
         s = smtplib.SMTP('smtp.gmail.com',587)
         s.starttls()
+        print("before login")
         s.login(GMAIL_USER,GMAIL_PASSWORD)
+        print("check check ")
         s.sendmail(GMAIL_USER, RECIPIENT_USER, msg.as_string())
+        print("check check check")
         s.quit()
         print("Email sent successfully")
     except Exception as e:
