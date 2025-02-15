@@ -34,11 +34,15 @@ def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
         }
 
+
+    print(url)
     response=scraper.get(url, headers=headers)
     
     soup=BeautifulSoup(response.text,"html.parser")
 
     quotes=[q.text.strip() for q in soup.find_all("a", class_="b-qt")]
+
+    print(quotes)
 
     return random.choice(quotes) if quotes else "STAY HARD !!"
 
