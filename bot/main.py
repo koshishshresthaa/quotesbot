@@ -16,6 +16,11 @@ GMAIL_USER=os.getenv("GMAIL_USERNAME")
 GMAIL_PASSWORD=os.getenv("GMAIL_PASSWORD")
 RECIPIENT_USER = 'koshish62@gmail.com'
 
+proxies = {
+    "http": "http://207.2.120.15:8080",
+    "https": "http://207.2.120.15:8080"
+}
+
 
 def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
 
@@ -37,7 +42,7 @@ def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
         }
 
     while True:
-        response = scraper.get(url,headers=headers)
+        response = scraper.get(url,headers=headers, proxies=proxies)
         if response.status_code != 200:
             print(f"Error {response.status_code}: Unable to fetch page. Retrying in 3 seconds...")
             time.sleep(3)
