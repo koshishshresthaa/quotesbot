@@ -77,18 +77,16 @@ def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
         }
 
-    while True:
-        response = scraper.get(url,headers=headers, proxies=proxy)
-        if response.status_code != 200:
-            print(f"Error {response.status_code}: Unable to fetch page. Retrying in 3 seconds...")
-            time.sleep(3)
-            continue
+    
+    response = scraper.get(url,headers=headers, proxies=proxy)
+    # if response.status_code != 200:
+    #     print(f"Error {response.status_code}: Unable to fetch page. Retrying in 3 seconds...")
 
-        soup = BeautifulSoup(response.text, "html.parser")
-        quotes = [q.text.strip() for q in soup.find_all("a", class_="b-qt")]
+    soup = BeautifulSoup(response.text, "html.parser")
+    quotes = [q.text.strip() for q in soup.find_all("a", class_="b-qt")]
 
-        if quotes:
-            break
+        # if quotes:
+        #     break
 
     return random.choice(quotes) 
 
