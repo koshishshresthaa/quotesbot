@@ -25,5 +25,5 @@ jobs:
       - name: Run script to send email
         env:
           GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
-          GMAIL_PASSWORD_BASE64: ${{ secrets.GMAIL_PASSWORD_BASE64 }}
+          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD}}
         run: python bot/main.py

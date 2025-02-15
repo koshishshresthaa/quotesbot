@@ -13,7 +13,7 @@ from email.mime.text import MIMEText
 load_dotenv()
 
 GMAIL_USER=os.getenv("GMAIL_USERNAME")
-GMAIL_PASSWORD=base64.b64decode(os.getenv("GMAIL_PASSWORD")).decode("utf-8")
+GMAIL_PASSWORD=os.getenv("GMAIL_PASSWORD")
 RECIPIENT_USER = 'koshish62@gmail.com'
 
 def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
