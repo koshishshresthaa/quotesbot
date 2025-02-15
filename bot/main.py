@@ -57,6 +57,7 @@ def send_mail():
     msg ['To'] = RECIPIENT_USER
 
     try:
+        print(GMAIL_USER , RECIPIENT_USER , GMAIL_PASSWORD)
         s = smtplib.SMTP('smtp.gmail.com',587)
         s.starttls()
         s.login(GMAIL_USER,GMAIL_PASSWORD)
