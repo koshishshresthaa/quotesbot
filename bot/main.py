@@ -37,7 +37,7 @@ def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
         }
 
     while True:
-        response = scraper.get(url)
+        response = scraper.get(url,headers=headers)
         if response.status_code != 200:
             print(f"Error {response.status_code}: Unable to fetch page. Retrying in 3 seconds...")
             time.sleep(3)
