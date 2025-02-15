@@ -67,7 +67,7 @@ def send_mail():
         s.quit()
         print("Email sent successfully")
     except Exception as e:
-        print("Failed to send email")
+        print("Failed to send email", e)
 
 
 if __name__=="__main__":
