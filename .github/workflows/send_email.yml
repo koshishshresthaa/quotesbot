@@ -26,4 +26,4 @@ jobs:
         env:
           GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
           GMAIL_PASSWORD_BASE64: ${{ secrets.GMAIL_PASSWORD_BASE64 }}
-        run: python main.py
+        run: python bot/main.py
