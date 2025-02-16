@@ -12,7 +12,7 @@ load_dotenv()
 
 GMAIL_USER=os.getenv("GMAIL_USERNAME")
 GMAIL_PASSWORD=os.getenv("GMAIL_PASSWORD")
-RECIPIENT_USER = 'koshish62@gmail.com'
+RECIPIENT_USER = '<YOUR GMAIL>'
 
 
 def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
