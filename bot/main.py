@@ -1,9 +1,7 @@
 import re
-import time
 from dotenv import load_dotenv
 import os , requests
 import cloudscraper
-from crontab import CronTab
 from typing import Optional
 from bs4 import BeautifulSoup
 import random
@@ -20,42 +18,41 @@ RECIPIENT_USER = 'koshish62@gmail.com'
 def get_random_quote(author:Optional[str]=None,topics:Optional[str]= None):
 
 
-    scraper = cloudscraper.create_scraper() 
+    scraper = cloudscraper.create_scraper()
+
 
     if author:
         author_name=re.sub(r"\s+", "-", author.strip())
-        url=f"https://www.brainyquote.com/authors/{author_name}-quotes"
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
-        }
+
+        url=f"https://zenquotes.io/authors/{author_name}"
 
     elif topics:
-        topic_name=re.sub(r"\s+", "-", topics.strip())
-        url=f"https://www.brainyquote.com/topics/{topic_name}-quotes"
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
-        }
+        url=f"https://zenquotes.io/keywords/{topics}"
 
-    while True:
-        response = scraper.get(url,headers=headers)
-        if response.status_code != 200:
-            print(f"Error {response.status_code}: Unable to fetch page. Retrying in 3 seconds...")
-            time.sleep(3)
-            continue
+    print("Processing !!!")
+    response = scraper.get(url)
+    
+    if response.status_code != 200:
+        print(f"Error {response.status_code}: Unable to fetch page..")
 
-        soup = BeautifulSoup(response.text, "html.parser")
-        quotes = [q.text.strip() for q in soup.find_all("a", class_="b-qt")]
+    soup = BeautifulSoup(response.text, "html.parser")
+    quotes = [q.text.strip() for q in soup.find_all("blockquote")]
 
-        if quotes:
-            break
+        
 
-    return random.choice(quotes) 
+    return random.choice(quotes)
 
 def send_mail():
 
-    author='david goggins'
-    quote=get_random_quote(author=author)
-    body = f"Good Morning!! \n\n Here's your quote of the day: \n\n '{quote}' - {author} \n\n Have a great day !"
+    topics_list=['inspiration','courage','freedom','life','living','success','work','time','truth''future']
+    author=None
+    topic= random.choice(topics_list)
+    quote=get_random_quote(topics=topic)
+
+    if author: 
+        body = f"Good Morning!! \n\nHere's your quote of the day:\n\n\n '{quote}' - {author} \n\n\n Have a great day !"
+    else:
+        body=f"Good Morning!!\n\n\n Here's your quote of the day:{quote} \n\n\n Have a great day Koshish"
 
     msg=MIMEText(body)
 
